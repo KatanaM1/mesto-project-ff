@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
-import { visibilityCards, deletedCard, placesList, likeBtns} from './Card.js';
+import { createCard, deletedCard, likeBtns} from './сard.js';
 import { openModal, closeModal } from './modal.js';
 
 const profileEditTarget = document.querySelector('.profile__edit-button');
@@ -19,6 +19,7 @@ const cardImgLink = cardElement.elements.link;
 const popupTypeImage = document.querySelector('.popup_type_image');
 const popuImageLink = popupTypeImage.querySelector('.popup__image');
 const popupImageName = popupTypeImage.querySelector('.popup__caption');
+const placesList = document.querySelector('.places__list');
 
 function fillForm() {
     formEditProfile.name.value = profileTitle.textContent;
@@ -26,7 +27,7 @@ function fillForm() {
 };
 
 initialCards.forEach(function(item) {
-    placesList.append(visibilityCards(item.name, item.link, deletedCard, likeBtns, openImg));
+    placesList.append(createCard(item.name, item.link, deletedCard, likeBtns, openImg));
 });
 
 profileEditTarget.addEventListener("click", function () { 
@@ -59,7 +60,7 @@ function newCardFormSubmit(evt) {
         name: cardTitle.value,
         link: cardImgLink.value
     }; 
-    const element = visibilityCards(newElement.name, newElement.link, deletedCard, likeBtns, openImg);
+    const element = createCard(newElement.name, newElement.link, deletedCard, likeBtns, openImg);
     placesList.prepend(element);
     cardElement.reset();
     closeModal(popupNewCard);
