@@ -52,7 +52,7 @@ function editProfileFormSubmit(evt) {
     closeModal(popupTypeEdit);
 };
 
-formEditProfile.addEventListener('submit', EditProfileFormSubmit); 
+formEditProfile.addEventListener('submit', editProfileFormSubmit); 
 
 function newCardFormSubmit(evt) {
     evt.preventDefault(); 
