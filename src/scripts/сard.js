@@ -5,7 +5,7 @@ const template = document.querySelector('#card-template').content;
 // @todo: DOM узлы
 
 // @todo: Функция создания карточки
-export function createCard(card, id, openImg, deletedCard, likeBtns) {
+export function createCard(card, userId, openImg, deletedCard, likeBtns) {
     const callCard = template.querySelector('.card').cloneNode(true);
     const deleteButton = callCard.querySelector('.card__delete-button');
     const cardImg = callCard.querySelector(".card__image");
@@ -19,19 +19,19 @@ export function createCard(card, id, openImg, deletedCard, likeBtns) {
     cardImg.alt = card.name;
     cardTitle.textContent = card.name;
     cardImg.addEventListener("click", () => {
-        openImg(card.link, card.name)
+        openImg(card.name, card.link)
     });
     //deleteButton.addEventListener('click', event => deletedCard(event));
     const userCardId = card.owner['_id'];
     const cardId = card._id;
-    if(id === userCardId) {
+    if(userId === userCardId) {
         deleteButton.addEventListener('click',(callCard) => {
-            deletedCard(callCard, id) 
+            deletedCard(callCard, cardId) 
       })
-      } else {
+    } else {
         deleteButton.remove();
-      }
-      if (likes.some(like => like._id === id)) {
+    }
+    if (likes.some(like => like._id === userId)) {
         likeButton.classList.add('card__like-button_is-active');
     } 
     likeButton.addEventListener('click', () => {
@@ -49,8 +49,8 @@ export function createCard(card, id, openImg, deletedCard, likeBtns) {
 };
 // @todo: Функция удаления карточки 
 
-export function deletedCard(card, id) {
-    deleteCardOnServer(id)
+export function deletedCard(card, cardId) {
+    deleteCardOnServer(cardId)
       .then(() => {
         card.target.closest('.places__item').remove()
       })
