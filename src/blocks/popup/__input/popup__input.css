@@ -28,10 +28,27 @@
 .popup__input-error {
   color: #FF0000;
   font-size: 12px;
-  line-height:14.52px;
+  line-height: 14.52px;
   visibility: hidden;
 }
 
 .popup__error_visible {
   visibility: visible;
+}
+
+
+.popup__position-error {
+  position: absolute;
+  inset-block-end: 105px;
+  inset-inline-start: 36px;
+}
+
+.popup__name-error {
+  position: absolute;
+}
+
+.popup__avatar-error {
+  position: absolute;
+  inset-block-end: 165px;
+  inset-inline-start: 36px;
 }
