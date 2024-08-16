@@ -1,7 +1,7 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
 import { createCard, deletedCard, likeBtns } from './сard.js';
-import { openModal, closeModal } from './modal.js';
+import { openModal, closeModal, renderLoading } from './modal.js';
 import { enableValidation, clearValidation } from './validation.js';
 import { editProfileInfo, getDataProfile, getInitialCards, postCard, editAvatar } from "./api.js";
 
@@ -35,8 +35,6 @@ const avatarForm = document.forms["avatar"];
 const popupAvatar = document.querySelector('.popup_type_avatar');
 const avatarInput = avatarForm.querySelector('.popup__input_type_url');
 const profileAvatar = document.querySelector('.profile__image');
-//const closeAvatarPopup = popupAvatar.querySelector('.popup__close');
-
 
 function fillProfileForm() {
   formEditProfile.name.value = profileTitle.textContent;
@@ -69,7 +67,7 @@ popupCloseButtons.forEach((button) => {
 
 function editProfileFormSubmit(evt) {
   evt.preventDefault();
-  renderLoading(true, popupTypeEdit);
+  renderLoading(true, evt);
   editProfileInfo({
     name: nameInput.value,
     about: jobInput.value,
@@ -83,19 +81,15 @@ function editProfileFormSubmit(evt) {
       console.error("Произошла ошибка:", error);
     })
     .finally(() => {
-      renderLoading(false, popupTypeEdit);
+      renderLoading(false, evt);
     })
 };
 
 formEditProfile.addEventListener("submit", editProfileFormSubmit);
 
-function renderLoading(isLoading, popupElement) {
-  const activeButton = popupElement.querySelector(".popup__button");
-  activeButton.textContent = isLoading ? "Сохранение..." : "Сохранить";
-};
-
 function handleAvatarFormSubmit(evt) {
   evt.preventDefault();
+  renderLoading(false, evt);
   editAvatar(avatarInput.value)
     .then((result) => {
       profileAvatar.setAttribute("style", `background-image: url('${result.avatar}')`);
@@ -105,7 +99,7 @@ function handleAvatarFormSubmit(evt) {
       console.log(error);
     })
     .finally(() => {
-      renderLoading(false, popupAvatar);
+      renderLoading(false, evt);
     })
 };
 
@@ -117,7 +111,7 @@ function newCardFormSubmit(evt) {
     name: namePlaceInput.value,
     link: linkPlaceInput.value
   };
-  renderLoading(true, popupAvatar);
+  renderLoading(true, evt);
   postCard(newElement)
     .then((res) => {
       placesList.prepend(createCard(res, res.owner._id, openImg, deletedCard, likeBtns));
@@ -128,7 +122,7 @@ function newCardFormSubmit(evt) {
       console.error("Произошла ошибка:", error);
     })
     .finally(() => {
-      renderLoading(false, popupNewCard);
+      renderLoading(false, evt);
     })
 
 };
