@@ -1,9 +1,10 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
 import { createCard, deletedCard, likeBtns } from './сard.js';
-import { openModal, closeModal, renderLoading } from './modal.js';
+import { openModal, closeModal } from './modal.js';
 import { enableValidation, clearValidation } from './validation.js';
 import { editProfileInfo, getDataProfile, getInitialCards, postCard, editAvatar } from "./api.js";
+import { renderLoading } from './utils.js';
 
 
 const profileEditTarget = document.querySelector('.profile__edit-button');
@@ -89,7 +90,7 @@ formEditProfile.addEventListener("submit", editProfileFormSubmit);
 
 function handleAvatarFormSubmit(evt) {
   evt.preventDefault();
-  renderLoading(false, evt);
+  renderLoading(true, evt);
   editAvatar(avatarInput.value)
     .then((result) => {
       profileAvatar.setAttribute("style", `background-image: url('${result.avatar}')`);
